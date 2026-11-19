@@ -9,20 +9,24 @@ import { Header } from './modules/shared/Header';
 import { Footer } from './modules/shared/Footer';
 
 export const App = () => (
-  <div className="App">
+  <div className="app">
     <Header />
 
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/phones" element={<Catalog type="phones" />} />
-      <Route path="/tablets" element={<Catalog type="tablets" />} />
-      <Route path="/accessories" element={<Catalog type="accessories" />} />
-      <Route path="/favorites" element={<Catalog type="favorites" />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/product/:id" element={<Product />} />
-      <Route path="/404" element={<NotFound />} />
-      <Route path="*" element={<Navigate to="/404" replace />} />
-    </Routes>
+    <div className="container">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/phones" element={<Catalog type="phones" />} />
+        <Route path="/tablets" element={<Catalog type="tablets" />} />
+        <Route path="/accessories" element={<Catalog type="accessories" />} />
+        <Route path="/favorites" element={<Catalog type="favorites" />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/product/:id" element={<Product />} />
+        <Route path="/contacts" element={<div>Contact page</div>} />
+        <Route path="/rights" element={<div>Terms & Conditions page</div>} />
+        <Route path="/404" element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
+      </Routes>
+    </div>
 
     <Footer />
   </div>

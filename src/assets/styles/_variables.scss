@@ -1,0 +1,34 @@
+@use 'breakpoints' as *;
+
+:root {
+  // breakpoint
+  --media-xs: 360px;
+  --media-sm: 640px;
+  --media-md: 1200px;
+  --media-lg: 1920px;
+
+  // sizes 
+  --header-height: 48px;
+
+  // colors
+  --color-p-black: #0f1121;
+  --color-p-secondary: #75767f;
+  --color-p-icons: #4a4d58;
+  --color-p-elements: #3b3e4a;
+  --color-p-surface1: #323542;
+  --color-p-surface2: #161827; 
+  --color-p-green: #27ae60;
+  --color-p-red: #eb5757;
+  --color-p-accent: #905bff;
+  --color-p-accent-hover: #a378ff;
+  --color-p-white: #f1f2f9;
+  --font-sans: Mont, sans-serif;
+}
+
+@include up('md') {
+  :root {
+    // sizes 
+    --header-height: 64px;
+  }
+}
+

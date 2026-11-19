@@ -1,0 +1,37 @@
+// Mobile-first breakpoints (min-width).
+// Available globally in every .scss file (see vite.config.mts).
+$breakpoints: (
+  'xs': 360px,
+  'sm': 640px,
+  'md': 1200px,
+  'lg': 1920px,
+);
+
+@mixin up($name) {
+  @if map-has-key($breakpoints, $name) {
+    @media (min-width: map-get($breakpoints, $name)) {
+      @content;
+    }
+  } @else {
+    @error 'Unknown breakpoint `#{$name}`. Use one of: #{map-keys($breakpoints)}';
+  }
+}
+
+@mixin down($name) {
+  @if map-has-key($breakpoints, $name) {
+    @media (max-width: (map-get($breakpoints, $name) - 0.02px)) {
+      @content;
+    }
+  } @else {
+    @error 'Unknown breakpoint `#{$name}`. Use one of: #{map-keys($breakpoints)}';
+  }
+}
+
+@mixin between($from, $to) {
+  @media (min-width: 
+    map-get($breakpoints, $from)) 
+    and (max-width: (map-get($breakpoints, $to) - 0.02px)
+  ) {
+    @content;
+  }
+}

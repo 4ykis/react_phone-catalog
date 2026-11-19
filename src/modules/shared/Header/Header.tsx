@@ -1,37 +1,123 @@
-import { Icon } from '../Icon';
-import { Logo } from '../Logo';
-import { NavItem } from './components/NavLink';
-import styles from './Header.module.scss';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
+import styles from './Header.module.scss';
+import { Logo } from '../Logo';
+import { Icon } from '../Icon';
+import { useIsMobile } from '../../../utils/useIsMobile';
+
+const NAV_LINKS = [
+  { to: '/', label: 'Home' },
+  { to: '/phones', label: 'Phones' },
+  { to: '/tablets', label: 'Tablets' },
+  { to: '/accessories', label: 'Accessories' },
+];
+
+const ICON_LINKS = [
+  { to: '/favorites', label: 'Favorites', icon: 'heart' },
+  { to: '/cart', label: 'Cart', icon: 'cart' },
+] as const;
+
+const getLinkClass = (extra: string) => {
+  return ({ isActive }: { isActive: boolean }) =>
+    classNames(styles['nav-link'], 'text-upp', extra, {
+      [styles.active]: isActive,
+    });
+};
 
 export const Header = () => {
+  const isMobile = useIsMobile();
+  const { pathname } = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  // close the menu on navigation
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  // close the menu when switching to desktop layout
+  useEffect(() => {
+    if (!isMobile) {
+      setIsOpen(false);
+    }
+  }, [isMobile]);
+
+  // close the menu on Escape
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
   return (
     <header className={styles.header}>
-      <div className={styles['header-container']}>
-        <div className={styles['header-logo']}>
+      <div
+        className={classNames(
+          styles['header-container'],
+          'container container--full',
+        )}
+      >
+        <Link to="/" className={styles['header-logo']} aria-label="Home">
           <Logo />
-        </div>
-        <ul
-          className={classNames(
-            styles['header-nav'],
-            styles['header-nav--spaced'],
-          )}
+        </Link>
+
+        {isMobile && (
+          <button
+            type="button"
+            className={styles['header-nav-toggle']}
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isOpen}
+            aria-controls="main-nav"
+            onClick={() => setIsOpen(current => !current)}
+          >
+            <Icon name={isOpen ? 'close' : 'menu'} />
+          </button>
+        )}
+
+        <nav
+          id="main-nav"
+          aria-label="Main"
+          className={classNames(styles['header-nav'], {
+            [styles['header-nav--open']]: isOpen,
+          })}
         >
-          <NavItem to="/">Home</NavItem>
-          <NavItem to="/phones">Phones</NavItem>
-          <NavItem to="/tablets">Tablets</NavItem>
-          <NavItem to="/accessories">Accessories</NavItem>
-        </ul>
-        <ul className={styles['header-nav']}>
-          <NavItem to="/favorites" isIcon={true}>
-            <Icon name="heart" />
-            {/* make counter icon */}
-          </NavItem>
-          <NavItem to="/cart" isIcon={true}>
-            <Icon name="cart" />
-            {/* make counter icon */}
-          </NavItem>
-        </ul>
+          <div className={styles['header-nav-links']}>
+            {NAV_LINKS.map(({ to, label }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={to === '/'}
+                className={getLinkClass(styles['nav-link--text'])}
+              >
+                {label}
+              </NavLink>
+            ))}
+          </div>
+
+          <div className={styles['header-nav-icons']}>
+            {ICON_LINKS.map(({ to, label, icon }) => (
+              <NavLink
+                key={to}
+                to={to}
+                aria-label={label}
+                className={getLinkClass(styles['nav-link--icon'])}
+              >
+                <Icon name={icon} />
+                {/* make counter icon */}
+              </NavLink>
+            ))}
+          </div>
+        </nav>
       </div>
     </header>
   );

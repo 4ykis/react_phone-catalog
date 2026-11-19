@@ -1,0 +1,76 @@
+@use 'breakpoints' as *;
+@use 'utils' as *;
+
+@font-face {
+  font-family: Mont;
+  src: url("/fonts/Mont-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Mont;
+  src: url("/fonts/Mont-SemiBold.otf") format("opentype");
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Mont;
+  src: url("/fonts/Mont-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+// Headings: mobile-first. Base values are for mobile,
+// desktop values apply from the `sm` breakpoint.
+.text-h1 {
+  @include text(32px, 41px, 700, -0.01em);
+
+  @include up('sm') {
+    @include text(48px, 56px, 700, -0.01em);
+  }
+}
+
+.text-h2 {
+  @include text(22px, 31px, 700);
+
+  @include up('sm') {
+    @include text(32px, 41px, 700, -0.01em);
+  }
+}
+
+.text-h3 {
+  @include text(20px, 26px, 600);
+
+  @include up('sm') {
+    @include text(22px, 31px, 700);
+  }
+}
+
+.text-h4 {
+  @include text(16px, 20px, 600);
+
+  @include up('sm') {
+    @include text(20px, 26px, 600);
+  }
+}
+
+// Same on all screens
+.text-upp {
+  @include text(12px, 11px, 700, 0.04em);
+
+  text-transform: uppercase;
+}
+
+.text-btn {
+  @include text(14px, 21px, 600);
+}
+
+.text-body {
+  @include text(14px, 21px, 400);
+}
+
+.text-txt {
+  @include text(12px, 15px, 600);
+}

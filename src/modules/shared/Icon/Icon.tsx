@@ -33,18 +33,18 @@ export type IconName = keyof typeof icons;
 type Props = {
   name: IconName;
   className?: string;
-  size?: number;
+  size?: string;
 };
 
-export const Icon = ({ name, className, size = 16 }: Props) => {
+export const Icon = ({ name, className, size = '16' }: Props) => {
   const SvgIcon = icons[name];
 
   return (
     <SvgIcon
       aria-hidden="true"
       className={className}
-      width={size}
-      height={size}
+      width={`${size}px`}
+      height={`${size}px`}
     />
   );
 };
