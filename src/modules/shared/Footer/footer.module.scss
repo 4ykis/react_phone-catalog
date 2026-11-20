@@ -1,5 +1,5 @@
 .footer {
-  box-shadow: 0 -1px 0 var(--color-p-surface1);
+  box-shadow: 0 -1px 0 var(--color-p-surface2);
 }
 
 .footer-container {
@@ -55,7 +55,7 @@
     width: 32px;
     height: 32px;
     color: var(--color-p-white);
-    background-color: var(--footer-icon-bg, var(--color-p-surface1));
+    background-color: var(--footer-icon-bg, var(--color-p-surface2));
     transition: background-color 0.3s;
   }
 

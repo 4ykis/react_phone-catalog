@@ -1,0 +1,120 @@
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin-inline: -16px;
+  gap: 8px;
+
+  @include up(sm) {
+    grid-template-columns: 32px minmax(0, 1fr) 32px;
+    align-items: center;
+    column-gap: 20px;
+    margin-inline: 0;
+  }
+
+  @include up(md) {
+    column-gap: 16px;
+  }
+}
+
+.banner {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+
+  @include up(sm) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+.arrow {
+  display: none;
+  width: 32px;
+  height: 100%;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-p-surface2);
+  border: none;
+  color: var(--color-p-white);
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--color-p-icons);
+  }
+
+  @include up(sm) {
+    display: flex;
+    grid-row: 1;
+  }
+}
+
+.prev {
+  grid-column: 1;
+}
+
+.next {
+  grid-column: 3;
+}
+
+.pagination {
+  --swiper-pagination-bullet-horizontal-gap: 2px;
+  --swiper-pagination-bullet-opacity: 1;
+  --swiper-pagination-bullet-inactive-opacity: 1;
+  --swiper-pagination-bullet-inactive-color: transparent;
+  --swiper-pagination-color: transparent;
+  --swiper-pagination-bullet-size: 24px;
+  --swiper-pagination-bullet-border-radius: 0;
+
+  display: flex;
+  justify-content: center;
+
+  @include up(sm) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+
+  &:global(.swiper-pagination) {
+    position: static;
+    width: auto;
+  }
+
+  :global(.swiper-pagination-bullet) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      display: block;
+      height: 4px;
+      width: 14px;
+      background: var(--hero-banner-bullet-color, var(--color-p-surface2));
+      transition: background-color 0.2s;
+    }
+
+    &:hover {
+      --hero-banner-bullet-color: var(--color-p-white);
+    }
+  }
+
+  
+
+  :global(.swiper-pagination-bullet-active) {
+    --hero-banner-bullet-color: var(--color-p-white);
+  }
+}
+
+.slide {
+  line-height: 0;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}

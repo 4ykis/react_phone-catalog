@@ -3,7 +3,7 @@
   z-index: 10;
   height: var(--header-height);
   background: var(--color-p-black);
-  box-shadow: 0 1px 0 var(--color-p-surface1);
+  box-shadow: 0 1px 0 var(--color-p-surface2);
 }
 
 .header-logo {
@@ -32,14 +32,14 @@
   height: var(--header-height);
   padding: 0;
   border: 0;
-  border-left: 1px solid var(--color-p-surface1);
+  border-left: 1px solid var(--color-p-surface2);
   background: none;
   color: var(--color-p-white);
   transition: background-color 0.3s;
   cursor: pointer;
 
   &:hover {
-    background: var(--color-p-surface1);
+    background: var(--color-p-surface2);
   }
 
   @include up('sm') {
@@ -56,7 +56,7 @@
   height: calc(100vh - (var(--header-height) + 1px));
   width: 100%;
   background: var(--color-p-black);
-  box-shadow: 0 1px 0 var(--color-p-surface1);
+  box-shadow: 0 1px 0 var(--color-p-surface2);
   opacity: var(--header-nav-opacity, 0);
   pointer-events: none;
 
@@ -102,7 +102,7 @@
 
 .header-nav-icons {
   display: flex;
-  border-top: 1px solid var(--color-p-surface1);
+  border-top: 1px solid var(--color-p-surface2);
 
   @include up('sm') {
     border-top: 0;
@@ -160,22 +160,45 @@
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: var(--color-p-surface1);
+      background-color: var(--color-p-surface2);
     }
 
     &:first-child {
-      border-right: 1px solid var(--color-p-surface1);
+      border-right: 1px solid var(--color-p-surface2);
     }
 
     @include up('sm') {
       flex: none;
       width: var(--header-height);
       min-height: 0;
-      border-right: 1px solid var(--color-p-surface1);
+      border-right: 1px solid var(--color-p-surface2);
 
       &:first-child {
-        border-left: 1px solid var(--color-p-surface1);
+        border-left: 1px solid var(--color-p-surface2);
       }
     }
   }
+}
+
+.icon-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.counter {
+  position: absolute;
+  top: -6px;
+  left: 10px;
+  min-width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--color-p-red);
+  border: 1px solid var(--color-p-black);
+  color: var(--color-p-white);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
 }

@@ -5,6 +5,7 @@ import styles from './Header.module.scss';
 import { Logo } from '../Logo';
 import { Icon } from '../Icon';
 import { useIsMobile } from '../../../utils/useIsMobile';
+import { useStore } from '../../../store/Store';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
@@ -29,6 +30,12 @@ export const Header = () => {
   const isMobile = useIsMobile();
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const { cart, favorites } = useStore();
+
+  const counts = {
+    '/favorites': favorites.length,
+    '/cart': cart.length,
+  };
 
   // close the menu on navigation
   useEffect(() => {
@@ -105,17 +112,28 @@ export const Header = () => {
           </div>
 
           <div className={styles['header-nav-icons']}>
-            {ICON_LINKS.map(({ to, label, icon }) => (
-              <NavLink
-                key={to}
-                to={to}
-                aria-label={label}
-                className={getLinkClass(styles['nav-link--icon'])}
-              >
-                <Icon name={icon} />
-                {/* make counter icon */}
-              </NavLink>
-            ))}
+            {ICON_LINKS.map(({ to, label, icon }) => {
+              const count = counts[to];
+
+              return (
+                <NavLink
+                  key={to}
+                  to={to}
+                  aria-label={count ? `${label}, ${count} items` : label}
+                  className={getLinkClass(styles['nav-link--icon'])}
+                >
+                  <span className={styles['icon-wrapper']}>
+                    <Icon name={icon} />
+
+                    {count > 0 && (
+                      <span className={styles.counter} aria-hidden="true">
+                        {count}
+                      </span>
+                    )}
+                  </span>
+                </NavLink>
+              );
+            })}
           </div>
         </nav>
       </div>

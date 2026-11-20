@@ -1,0 +1,35 @@
+.home-page {
+  padding-block: 24px 64px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 56px;
+
+  @include up(sm) {
+    padding-block: 32px 64px;
+    gap: 64px;
+  }
+
+  @include up(md) {
+    padding-block: 56px 80px;
+    gap: 80px;
+  }
+}
+
+.home-page-banner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  gap: 24px;
+
+  @include up(sm) {
+    gap: 32px;
+  }
+
+  @include up(md) {
+    gap: 56px;
+  }
+}
+
+.home-page-slider {
+  min-width: 0;
+}
