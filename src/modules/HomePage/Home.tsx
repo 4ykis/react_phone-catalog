@@ -9,8 +9,10 @@ import {
   getBrandNewProducts,
   getHotPriceProducts,
   getProductDetails,
+  getCategories,
   getProducts,
 } from '../../utils/products';
+import { Category } from './components/Category/Category';
 
 const mainBannerItems: BannerItem[] = [
   {
@@ -58,6 +60,8 @@ export const Home = () => {
     [products],
   );
 
+  const categories = useMemo(() => getCategories(products), [products]);
+
   return (
     <div className={styles['home-page']}>
       <h1 className="hidden">Product Catalog</h1>
@@ -74,6 +78,12 @@ export const Home = () => {
           slides={brandNewSlides}
           details={details}
         />
+      </div>
+
+      <div className={styles['home-page-categories']}>
+        {categories.map(cat => (
+          <Category key={cat.name} category={cat} />
+        ))}
       </div>
 
       <div className={styles['home-page-slider']}>

@@ -1,7 +1,8 @@
+import { forwardRef } from 'react';
 import classNames from 'classnames';
 import styles from './Button.module.scss';
 
-type Palette = 'primary' | 'secondary';
+type Palette = 'primary' | 'secondary' | 'tertiary';
 type Size = 'sm' | 'md' | 'lg';
 
 interface Props {
@@ -12,31 +13,48 @@ interface Props {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   fullWidth?: boolean;
+  isIcon?: boolean;
   className?: string;
+  isSelected?: boolean;
+  ariaLabel?: string;
 }
 
-export const Button = ({
-  children,
-  onClick,
-  palette = 'primary',
-  size = 'md',
-  type = 'button',
-  disabled = false,
-  fullWidth = false,
-  className,
-}: Props) => (
-  <button
-    type={type}
-    className={classNames(
-      styles.button,
-      styles[palette],
-      styles[size],
-      { [styles['full-width']]: fullWidth },
+export const Button = forwardRef<HTMLButtonElement, Props>(
+  (
+    {
+      children,
+      onClick,
+      palette = 'primary',
+      size = 'md',
+      type = 'button',
+      disabled = false,
+      isIcon = false,
+      fullWidth = false,
+      isSelected = false,
       className,
-    )}
-    onClick={onClick}
-    disabled={disabled}
-  >
-    {children}
-  </button>
+      ariaLabel,
+    },
+    ref,
+  ) => (
+    <button
+      ref={ref}
+      type={type}
+      aria-label={ariaLabel}
+      className={classNames(
+        styles.button,
+        styles[palette],
+        styles[size],
+        { [styles['button--selected']]: isSelected },
+        { [styles['button-icon']]: isIcon },
+        { [styles['full-width']]: fullWidth },
+        className,
+      )}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  ),
 );
+
+Button.displayName = 'Button';

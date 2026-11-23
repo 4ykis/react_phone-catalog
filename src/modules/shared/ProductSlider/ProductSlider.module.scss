@@ -19,43 +19,26 @@
   gap: 16px;
 }
 
-.arrow {
-  display: flex;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--color-p-surface2);
-  background: var(--color-p-surface2);
-  color: var(--color-p-white);
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-
-  &:global(.swiper-button-disabled) {
-    background-color: transparent;
-    border-color: var(--color-p-elements);
-    cursor: default;
-    color: var(--color-p-elements);
-  }
-
-  &:hover:not(:global(.swiper-button-disabled)) {
-    background: var(--color-p-icons);
-    border-color: var(--color-p-icons);
-  }
-}
-
 .swiper {
   min-width: 0;
+  margin-inline: -24px;
+  padding-inline: 24px;
+
+  @include up(md) {
+    padding: 0;
+    margin: 0;
+  }
 }
 
 .slide {
-  // Mobile: fixed card width because slidesPerView is "auto"
   width: 212px;
   height: auto;
 
-  // Desktop: width is set by Swiper (4 per view)
   @include up(sm) {
+    width: 237px; 
+  }
+
+  @include up(md) {
     width: auto;
   }
 }

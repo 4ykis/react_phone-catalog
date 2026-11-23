@@ -1,7 +1,9 @@
-import { RefObject, useRef } from 'react';
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, FreeMode } from 'swiper/modules';
+import { FreeMode } from 'swiper/modules';
+import type { Swiper as SwiperType } from 'swiper';
 import { ProductItem } from '../ProductItem';
+import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { Product } from '../../../types/Product';
 import { ProductDetails } from '../../../types/ProductDetails';
@@ -19,25 +21,36 @@ interface Props {
 
 interface ArrowProps {
   direction: 'left' | 'right';
-  className?: string;
   label: string;
-  buttonRef: RefObject<HTMLButtonElement>;
+  disabled: boolean;
+  onClick: () => void;
 }
 
-const Arrow = ({ direction, className, label, buttonRef }: ArrowProps) => (
-  <button
-    ref={buttonRef}
-    type="button"
-    className={className}
-    aria-label={label}
+const Arrow = ({ direction, label, disabled, onClick }: ArrowProps) => (
+  <Button
+    palette="tertiary"
+    size="sm"
+    isIcon
+    ariaLabel={label}
+    disabled={disabled}
+    onClick={onClick}
   >
     <Icon name={`arrow-${direction}`} />
-  </button>
+  </Button>
 );
 
 export const ProductSlider = ({ title, slides, details }: Props) => {
-  const prevRef = useRef<HTMLButtonElement>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
+  const [swiper, setSwiper] = useState<SwiperType | null>(null);
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+
+  const syncEdges = (instance: SwiperType) => {
+    // A looping slider never reaches an edge
+    const { loop } = instance.params;
+
+    setIsBeginning(!loop && instance.isBeginning);
+    setIsEnd(!loop && instance.isEnd);
+  };
 
   return (
     <section className={styles.slider}>
@@ -47,14 +60,14 @@ export const ProductSlider = ({ title, slides, details }: Props) => {
         <div className={styles.controls}>
           <Arrow
             direction="left"
-            buttonRef={prevRef}
-            className={`${styles.arrow}`}
+            disabled={isBeginning}
+            onClick={() => swiper?.slidePrev()}
             label="Previous products"
           />
           <Arrow
             direction="right"
-            buttonRef={nextRef}
-            className={`${styles.arrow}`}
+            disabled={isEnd}
+            onClick={() => swiper?.slideNext()}
             label="Next products"
           />
         </div>
@@ -62,22 +75,19 @@ export const ProductSlider = ({ title, slides, details }: Props) => {
 
       <Swiper
         className={styles.swiper}
-        modules={[Navigation, FreeMode]}
+        modules={[FreeMode]}
         slidesPerView="auto"
         spaceBetween={16}
         freeMode
         loop={false}
-        navigation
-        onBeforeInit={swiper => {
-          const { navigation } = swiper.params;
-
-          if (typeof navigation === 'object') {
-            navigation.prevEl = prevRef.current;
-            navigation.nextEl = nextRef.current;
-          }
+        onSwiper={instance => {
+          setSwiper(instance);
+          syncEdges(instance);
         }}
+        onProgress={syncEdges}
+        onBreakpoint={syncEdges}
         breakpoints={{
-          640: {
+          1199: {
             slidesPerView: 4,
             spaceBetween: 16,
             freeMode: false,

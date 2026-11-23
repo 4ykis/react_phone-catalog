@@ -1,3 +1,4 @@
+import { CategoryInfo } from '../types/Category';
 import { Product } from '../types/Product';
 import { ProductDetails } from '../types/ProductDetails';
 
@@ -21,6 +22,17 @@ export const getBrandNewProducts = (products: Product[]): Product[] => {
 
   return products.filter(({ year }) => year === newestYear);
 };
+
+export const getCategories = (products: Product[]): CategoryInfo[] =>
+  products
+    .map(({ category }) => category)
+    .filter((category, index, all) => all.indexOf(category) === index)
+    .map(name => ({
+      name,
+      img: `img/category-${name}.png`,
+      link: `/${name}`,
+      items: products.filter(({ category }) => category === name).length,
+    }));
 
 export const getHotPriceProducts = (products: Product[]): Product[] =>
   [...products].sort(byDiscountDesc);

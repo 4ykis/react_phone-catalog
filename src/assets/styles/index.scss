@@ -1,5 +1,5 @@
 // Single global entry point. Imported once in src/index.tsx.
-// Mixins from _breakpoints.scss are injected into every scss file by Vite.
+// Mixins from _breakpoints.scss and _utils.scss are injected into every scss file by Vite.
 @use 'reset';
 @use 'variables';
 @use 'typography';

@@ -33,3 +33,14 @@
 .home-page-slider {
   min-width: 0;
 }
+
+.home-page-categories {
+  display: grid;
+  grid-template-rows: 1fr;
+  align-items: stretch;
+  gap: 16px;
+
+  @include up('sm') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

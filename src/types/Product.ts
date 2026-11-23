@@ -1,9 +1,7 @@
-import { Category } from './Category';
-
 // public/api/products.json
 export interface Product {
   id: number;
-  category: Category;
+  category: string;
   itemId: string;
   name: string;
   fullPrice: number;

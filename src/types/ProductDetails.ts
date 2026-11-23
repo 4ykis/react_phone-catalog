@@ -1,5 +1,3 @@
-import { Category } from './Category';
-
 export interface DescriptionBlock {
   title: string;
   text: string[];
@@ -8,7 +6,7 @@ export interface DescriptionBlock {
 // Fields shared by phones.json, tablets.json and accessories.json
 export interface ProductDetails {
   id: string;
-  category: Category;
+  category: string;
   namespaceId: string;
   name: string;
   capacityAvailable: string[];
