@@ -1,0 +1,34 @@
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  color: var(--color-p-white);
+  transition: color 0.3s;
+
+  &:hover {
+    color: var(--color-p-accent-hover);
+  }
+}
+
+.separator {
+  color: var(--color-p-icons);
+}
+
+.current {
+  color: var(--color-p-secondary);
+}

@@ -1,0 +1,22 @@
+.catalog {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: 24px;
+  padding-block: 24px 64px;
+
+  @include up(md) {
+    gap: 32px;
+    padding-block: 24px 80px;
+  }
+}
+
+.heading {
+  display: grid;
+  gap: 8px;
+}
+
+.count {
+  margin: 0;
+  color: var(--color-p-secondary);
+}

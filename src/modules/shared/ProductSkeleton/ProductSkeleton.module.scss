@@ -1,0 +1,36 @@
+// Height approximates a full ProductItem card
+.card {
+  height: 453px;
+  background-color: var(--color-p-surface3);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(255 255 255 / 12%) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 2s infinite linear;
+
+  @include up('sm') {
+    height: 505px;
+  }
+
+  @include up('md') {
+    height: 520px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}

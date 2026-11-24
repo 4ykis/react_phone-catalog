@@ -30,6 +30,33 @@
   }
 }
 
+.skeletons {
+  display: flex;
+  gap: 16px;
+  overflow: hidden;
+  margin-inline: -24px;
+  padding-inline: 24px;
+
+  @include up(md) {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.skeleton {
+  flex: 0 0 212px;
+
+  @include up(sm) {
+    flex-basis: 237px;
+  }
+
+  @include up(md) {
+    flex: initial;
+  }
+}
+
 .slide {
   width: 212px;
   height: auto;

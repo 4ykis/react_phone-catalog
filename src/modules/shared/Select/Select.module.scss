@@ -1,0 +1,82 @@
+.select {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.label {
+  color: var(--color-p-secondary);
+}
+
+.wrapper {
+  position: relative;
+}
+
+.field {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 0 40px 0 12px;
+  font-family: inherit;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-p-white);
+  background-color: var(--color-p-surface2);
+  border: 1px solid var(--select-border-color, var(--color-p-surface2));
+  cursor: pointer;
+  transition: border-color 0.3s;
+
+  &:hover,
+  &:focus-visible,
+  &.open {
+    --select-border-color: var(--color-p-accent);
+
+    outline: none;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 20px;
+  right: 12px;
+  transform: translateY(-50%);
+  color: var(--color-p-white);
+  pointer-events: none;
+  transition: transform 0.3s;
+}
+
+.field.open ~ .icon {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 240px;
+  overflow-y: auto;
+  background-color: var(--color-p-black);
+  border: 1px solid var(--color-p-elements);
+}
+
+.option {
+  padding: 6px 12px;
+  font-weight: 600;
+  color: var(--color-p-secondary);
+  cursor: pointer;
+
+  &.selected,
+  &.active {
+    background-color: var(--color-p-surface2);
+    color: var(--color-p-white);
+  }
+}

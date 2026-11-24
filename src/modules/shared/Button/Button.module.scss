@@ -44,12 +44,12 @@
 }
 
 .secondary {
-  --btn-bg-color: var(--color-p-surface);
+  --btn-bg-color: var(--color-p-surface3);
   --btn-color-text: var(--color-p-white);
   --btn-bg-color-selected: var(--color-p-accent);
 
   &:hover:not(:disabled) {
-    --btn-bg-color: var(--color-p-surface2);
+    --btn-bg-color: var(--color-p-elements);
   }
 }
 

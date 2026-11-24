@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { ProductItem } from '../ProductItem';
+import { ProductSkeleton } from '../ProductSkeleton';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { Product } from '../../../types/Product';
@@ -17,6 +18,7 @@ interface Props {
   slides: Product[];
   // details by id (matches Product.itemId)
   details: Record<string, ProductDetails>;
+  isLoading?: boolean;
 }
 
 interface ArrowProps {
@@ -39,7 +41,12 @@ const Arrow = ({ direction, label, disabled, onClick }: ArrowProps) => (
   </Button>
 );
 
-export const ProductSlider = ({ title, slides, details }: Props) => {
+export const ProductSlider = ({
+  title,
+  slides,
+  details,
+  isLoading = false,
+}: Props) => {
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -60,47 +67,60 @@ export const ProductSlider = ({ title, slides, details }: Props) => {
         <div className={styles.controls}>
           <Arrow
             direction="left"
-            disabled={isBeginning}
+            disabled={isLoading || isBeginning}
             onClick={() => swiper?.slidePrev()}
             label="Previous products"
           />
           <Arrow
             direction="right"
-            disabled={isEnd}
+            disabled={isLoading || isEnd}
             onClick={() => swiper?.slideNext()}
             label="Next products"
           />
         </div>
       </div>
 
-      <Swiper
-        className={styles.swiper}
-        modules={[FreeMode]}
-        slidesPerView="auto"
-        spaceBetween={16}
-        freeMode
-        loop={false}
-        onSwiper={instance => {
-          setSwiper(instance);
-          syncEdges(instance);
-        }}
-        onProgress={syncEdges}
-        onBreakpoint={syncEdges}
-        breakpoints={{
-          1199: {
-            slidesPerView: 4,
-            spaceBetween: 16,
-            freeMode: false,
-            loop: slides.length > 4,
-          },
-        }}
-      >
-        {slides.map(product => (
-          <SwiperSlide key={product.id} className={styles.slide}>
-            <ProductItem product={product} details={details[product.itemId]} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {isLoading ? (
+        <div className={styles.skeletons} aria-busy="true">
+          {Array.from({ length: 4 }, (_, i) => (
+            <div key={i} className={styles.skeleton}>
+              <ProductSkeleton />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <Swiper
+          className={styles.swiper}
+          modules={[FreeMode]}
+          slidesPerView="auto"
+          spaceBetween={16}
+          freeMode
+          loop={false}
+          onSwiper={instance => {
+            setSwiper(instance);
+            syncEdges(instance);
+          }}
+          onProgress={syncEdges}
+          onBreakpoint={syncEdges}
+          breakpoints={{
+            1199: {
+              slidesPerView: 4,
+              spaceBetween: 16,
+              freeMode: false,
+              loop: slides.length > 4,
+            },
+          }}
+        >
+          {slides.map(product => (
+            <SwiperSlide key={product.id} className={styles.slide}>
+              <ProductItem
+                product={product}
+                details={details[product.itemId]}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </section>
   );
 };

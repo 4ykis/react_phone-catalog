@@ -42,13 +42,16 @@ export const Home = () => {
 
   const [details, setDetails] = useState<Record<string, ProductDetails>>({});
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     getProductDetails()
       .then(setDetails)
       .catch(() => setDetails({}));
     getProducts()
       .then(setProducts)
-      .catch(() => setProducts([]));
+      .catch(() => setProducts([]))
+      .finally(() => setIsLoading(false));
   }, []);
 
   const brandNewSlides = useMemo(
@@ -77,6 +80,7 @@ export const Home = () => {
           title="Brand new models"
           slides={brandNewSlides}
           details={details}
+          isLoading={isLoading}
         />
       </div>
 
@@ -91,6 +95,7 @@ export const Home = () => {
           title="Hot prices"
           slides={hotPriceSlides}
           details={details}
+          isLoading={isLoading}
         />
       </div>
     </div>
