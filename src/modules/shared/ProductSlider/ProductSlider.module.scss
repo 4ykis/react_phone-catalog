@@ -19,10 +19,17 @@
   gap: 16px;
 }
 
+// Bleeds to the screen edges: the offset equals the page container gutter
+// (16px below `sm`, 24px from `sm`), otherwise the page scrolls horizontally
 .swiper {
   min-width: 0;
-  margin-inline: -24px;
-  padding-inline: 24px;
+  margin-inline: -16px;
+  padding-inline: 16px;
+
+  @include up(sm) {
+    margin-inline: -24px;
+    padding-inline: 24px;
+  }
 
   @include up(md) {
     padding: 0;
@@ -34,8 +41,13 @@
   display: flex;
   gap: 16px;
   overflow: hidden;
-  margin-inline: -24px;
-  padding-inline: 24px;
+  margin-inline: -16px;
+  padding-inline: 16px;
+
+  @include up(sm) {
+    margin-inline: -24px;
+    padding-inline: 24px;
+  }
 
   @include up(md) {
     display: grid;

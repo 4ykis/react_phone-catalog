@@ -1,0 +1,8 @@
+@use 'variables' as *;
+
+// Reusable color classes: .color-black, .color-spacegray, ...
+@each $name in map-keys($product-colors) {
+  .color-#{$name} {
+    background-color: var(--color-product-#{$name});
+  }
+}

@@ -6,6 +6,9 @@ export interface DescriptionBlock {
 // Fields shared by phones.json, tablets.json and accessories.json
 export interface ProductDetails {
   id: string;
+  // numeric id and release year come from products.json (see getAllDetails)
+  productId: number;
+  year: number;
   category: string;
   namespaceId: string;
   name: string;
@@ -21,5 +24,8 @@ export interface ProductDetails {
   resolution: string;
   processor: string;
   ram: string;
+  // camera and zoom exist only for phones and tablets
+  camera?: string;
+  zoom?: string;
   cell: string[];
 }

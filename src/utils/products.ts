@@ -2,15 +2,6 @@ import { CategoryInfo } from '../types/Category';
 import { Product } from '../types/Product';
 import { ProductDetails } from '../types/ProductDetails';
 
-export const getProducts = (): Promise<Product[]> =>
-  fetch('api/products.json').then(response => {
-    if (!response.ok) {
-      throw new Error(`Failed to load products: ${response.status}`);
-    }
-
-    return response.json();
-  });
-
 const getDiscount = ({ fullPrice, price }: Product) => fullPrice - price;
 
 const byDiscountDesc = (a: Product, b: Product) => {
@@ -48,15 +39,92 @@ const loadJson = <T>(url: string): Promise<T> =>
 
 type DetailsMap = Record<string, ProductDetails>;
 
-export const getProductDetails = async (): Promise<DetailsMap> => {
-  const lists = await Promise.all([
-    loadJson<ProductDetails[]>('api/phones.json'),
-    loadJson<ProductDetails[]>('api/tablets.json'),
-    loadJson<ProductDetails[]>('api/accessories.json'),
+type RawDetails = Omit<ProductDetails, 'productId' | 'year'>;
+
+// Color names and some ids are written inconsistently across the files,
+// so items are matched by "model + capacity + color" without spaces/dashes
+const normalize = (value: string) => value.toLowerCase().replace(/[\s-]/g, '');
+
+// The details files are the source of truth. products.json only adds
+// the numeric id and the release year.
+export const getAllDetails = async (): Promise<ProductDetails[]> => {
+  const [phones, tablets, accessories, products] = await Promise.all([
+    loadJson<RawDetails[]>('api/phones.json'),
+    loadJson<RawDetails[]>('api/tablets.json'),
+    loadJson<RawDetails[]>('api/accessories.json'),
+    loadJson<Product[]>('api/products.json'),
   ]);
 
-  return Object.fromEntries(lists.flat().map(item => [item.id, item]));
+  const extras = new Map(
+    products.map(({ itemId, id, year }) => [normalize(itemId), { id, year }]),
+  );
+
+  return [...phones, ...tablets, ...accessories].map(item => {
+    const extra = extras.get(
+      normalize(`${item.namespaceId}${item.capacity}${item.color}`),
+    );
+
+    return { ...item, productId: extra?.id ?? 0, year: extra?.year ?? 0 };
+  });
 };
+
+export const toProduct = (details: ProductDetails): Product => ({
+  id: details.productId,
+  category: details.category,
+  itemId: details.id,
+  name: details.name,
+  fullPrice: details.priceRegular,
+  price: details.priceDiscount,
+  screen: details.screen,
+  capacity: details.capacity,
+  color: details.color,
+  ram: details.ram,
+  year: details.year,
+  image: details.images[0],
+});
+
+export const getProducts = async (): Promise<Product[]> =>
+  (await getAllDetails()).map(toProduct);
+
+export const getProductDetails = async (): Promise<DetailsMap> => {
+  const all = await getAllDetails();
+
+  return Object.fromEntries(all.map(item => [item.id, item]));
+};
+
+// Finds the variant of the same model with the given capacity / color.
+// Ids are not built from the attributes, because some of them are irregular.
+export const findVariant = (
+  all: ProductDetails[],
+  current: ProductDetails,
+  changes: Partial<Pick<ProductDetails, 'capacity' | 'color'>>,
+): ProductDetails | undefined => {
+  const target = {
+    capacity: current.capacity,
+    color: current.color,
+    ...changes,
+  };
+
+  return all.find(
+    item =>
+      item.namespaceId === current.namespaceId &&
+      item.capacity === target.capacity &&
+      normalize(item.color) === normalize(target.color),
+  );
+};
+
+export const getRecommended = (
+  products: Product[],
+  current: Product,
+  limit = 12,
+): Product[] =>
+  products
+    .filter(
+      ({ category, itemId }) =>
+        category === current.category && itemId !== current.itemId,
+    )
+    .sort((a, b) => b.year - a.year || b.price - a.price)
+    .slice(0, limit);
 
 export type SortType = 'newest' | 'alphabetically' | 'cheapest';
 

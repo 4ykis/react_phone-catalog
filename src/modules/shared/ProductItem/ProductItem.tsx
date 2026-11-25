@@ -1,7 +1,6 @@
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Product } from '../../../types/Product';
-import { ProductDetails } from '../../../types/ProductDetails';
 import styles from './ProductItem.module.scss';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
@@ -9,13 +8,13 @@ import { useStore } from '../../../store/Store';
 
 interface Props {
   product: Product;
-  details?: ProductDetails;
 }
 
 export const ProductItem = ({ product }: Props) => {
   const { itemId, name, image, fullPrice, price, screen, capacity, ram } =
     product;
 
+  const { pathname, search } = useLocation();
   const { toggleCart, toggleFavorite, isInCart, isFavorite } = useStore();
   const inCart = isInCart(product.itemId);
   const favorite = isFavorite(product.itemId);
@@ -30,7 +29,7 @@ export const ProductItem = ({ product }: Props) => {
   return (
     <article className={styles.product}>
       <div className={styles['product-image']}>
-        <Link to={productLink}>
+        <Link to={productLink} state={{ from: { pathname, search } }}>
           <img
             className={styles['product-image__img']}
             src={image}
@@ -41,6 +40,7 @@ export const ProductItem = ({ product }: Props) => {
       <div className={styles['product-content']}>
         <Link
           to={productLink}
+          state={{ from: { pathname, search } }}
           className={classNames(styles['product-title'], 'text-body')}
         >
           {name}

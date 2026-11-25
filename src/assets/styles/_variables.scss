@@ -1,5 +1,30 @@
 @use 'breakpoints' as *;
 
+// Product colors. Keys are color names without spaces and dashes
+// ("space gray" -> spacegray). Used by --color-product-{name} and .color-{name}.
+$product-colors: (
+  'black': #1f2020,
+  'blue': #5f7a95,
+  'coral': #ee7762,
+  'gold': #f9e5c9,
+  'graphite': #575c5e,
+  'green': #aee1cd,
+  'midnight': #191f26,
+  'midnightgreen': #4e5851,
+  'pink': #fadde1,
+  'purple': #b8afe6,
+  'red': #ba0c2e,
+  'rosegold': #e6c7c2,
+  'sierrablue': #9bb5ce,
+  'silver': #e2e4e1,
+  'skyblue': #a7c1d9,
+  'spacegray': #535150,
+  'spaceblack': #403e3d,
+  'starlight': #f0e4d3,
+  'white': #f5f5f5,
+  'yellow': #fddf5d,
+);
+
 :root {
   // breakpoint
   --media-xs: 360px;
@@ -23,6 +48,11 @@
   --color-p-accent-hover: #a378ff;
   --color-p-white: #f1f2f9;
   --font-sans: Mont, sans-serif;
+
+  // product colors
+  @each $name, $value in $product-colors {
+    --color-product-#{$name}: #{$value};
+  }
 }
 
 @include up('md') {
@@ -31,4 +61,3 @@
     --header-height: 64px;
   }
 }
-

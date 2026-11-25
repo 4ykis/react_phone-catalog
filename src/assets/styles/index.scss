@@ -2,6 +2,7 @@
 // Mixins from _breakpoints.scss and _utils.scss are injected into every scss file by Vite.
 @use 'reset';
 @use 'variables';
+@use 'product-colors';
 @use 'typography';
 @use 'base';
 @use 'layout';

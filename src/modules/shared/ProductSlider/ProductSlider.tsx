@@ -7,7 +7,6 @@ import { ProductSkeleton } from '../ProductSkeleton';
 import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { Product } from '../../../types/Product';
-import { ProductDetails } from '../../../types/ProductDetails';
 import styles from './ProductSlider.module.scss';
 
 import 'swiper/css';
@@ -16,8 +15,6 @@ import 'swiper/css/free-mode';
 interface Props {
   title: string;
   slides: Product[];
-  // details by id (matches Product.itemId)
-  details: Record<string, ProductDetails>;
   isLoading?: boolean;
 }
 
@@ -41,12 +38,7 @@ const Arrow = ({ direction, label, disabled, onClick }: ArrowProps) => (
   </Button>
 );
 
-export const ProductSlider = ({
-  title,
-  slides,
-  details,
-  isLoading = false,
-}: Props) => {
+export const ProductSlider = ({ title, slides, isLoading = false }: Props) => {
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -113,10 +105,7 @@ export const ProductSlider = ({
         >
           {slides.map(product => (
             <SwiperSlide key={product.id} className={styles.slide}>
-              <ProductItem
-                product={product}
-                details={details[product.itemId]}
-              />
+              <ProductItem product={product} />
             </SwiperSlide>
           ))}
         </Swiper>

@@ -4,11 +4,9 @@ import { HeroBanner } from './components/HeroBanner';
 import { BannerItem } from '../../types/mainBanner';
 import { ProductSlider } from '../shared/ProductSlider';
 import { Product } from '../../types/Product';
-import { ProductDetails } from '../../types/ProductDetails';
 import {
   getBrandNewProducts,
   getHotPriceProducts,
-  getProductDetails,
   getCategories,
   getProducts,
 } from '../../utils/products';
@@ -40,14 +38,9 @@ const MAX_SLIDES = 12;
 export const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
-  const [details, setDetails] = useState<Record<string, ProductDetails>>({});
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getProductDetails()
-      .then(setDetails)
-      .catch(() => setDetails({}));
     getProducts()
       .then(setProducts)
       .catch(() => setProducts([]))
@@ -79,7 +72,6 @@ export const Home = () => {
         <ProductSlider
           title="Brand new models"
           slides={brandNewSlides}
-          details={details}
           isLoading={isLoading}
         />
       </div>
@@ -94,7 +86,6 @@ export const Home = () => {
         <ProductSlider
           title="Hot prices"
           slides={hotPriceSlides}
-          details={details}
           isLoading={isLoading}
         />
       </div>

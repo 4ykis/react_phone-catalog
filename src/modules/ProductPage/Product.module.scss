@@ -1,0 +1,95 @@
+// Same page rhythm as the home page
+.product-container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  padding-block: 24px 64px;
+
+  @include up(sm) {
+    padding-block: 32px 64px;
+  }
+
+  @include up(md) {
+    padding-block: 56px 80px;
+  }
+}
+
+.product {
+  display: grid;
+  gap: 40px;
+  padding-block: 24px 0;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'gallery'
+    'details'
+    'about'
+    'techspec';
+
+  @include up(sm) {
+    gap: 64px 16px;
+    grid-template-columns: minmax(338px, 1fr) minmax(237px, 1fr);
+    grid-template-areas:
+      'gallery details'
+      'about about'
+      'techspec techspec';
+  }
+
+  @include up(md) {
+    grid-template-columns: 560px minmax(512px, 1fr);
+    grid-template-areas:
+      'gallery details'
+      'about techspec';
+  }
+}
+
+.back {
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-family: inherit;
+  color: var(--color-p-secondary);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-p-white);
+  }
+}
+
+.title {
+  margin: 0;
+}
+
+.gallery {
+  grid-area: gallery;
+  align-self: start;
+}
+
+.details {
+  grid-area: details;
+}
+
+.about {
+  grid-area: about;
+}
+
+.techspec {
+  grid-area: techspec;
+}
+
+// Slider is spaced from the content like the sliders on the home page
+.recommended {
+  min-width: 0;
+  margin-top: 32px;
+
+  @include up(sm) {
+    margin-top: 40px;
+  }
+
+  @include up(md) {
+    margin-top: 56px;
+  }
+ }
