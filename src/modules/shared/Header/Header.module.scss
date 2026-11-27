@@ -1,5 +1,6 @@
 .header {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 10;
   height: var(--header-height);
   background: var(--color-p-black);
@@ -163,7 +164,7 @@
       background-color: var(--color-p-surface2);
     }
 
-    &:first-child {
+    &:not(:last-child) {
       border-right: 1px solid var(--color-p-surface2);
     }
 
@@ -178,6 +179,16 @@
       }
     }
   }
+}
+
+// Theme switcher is a <button> that looks like the icon links
+.theme-toggle {
+  padding: 0;
+  background: none;
+  border-block: 0;
+  border-left: 0;
+  font-family: inherit;
+  cursor: pointer;
 }
 
 .icon-wrapper {
@@ -197,7 +208,7 @@
   border-radius: 50%;
   background-color: var(--color-p-red);
   border: 1px solid var(--color-p-black);
-  color: var(--color-p-white);
+  color: var(--color-p-static-white);
   font-size: 9px;
   font-weight: 700;
   line-height: 1;

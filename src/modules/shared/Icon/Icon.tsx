@@ -10,7 +10,9 @@ import Home from '../../../assets/icons/home.svg?react';
 import Menu from '../../../assets/icons/menu.svg?react';
 import Minus from '../../../assets/icons/minus.svg?react';
 import Plus from '../../../assets/icons/plus.svg?react';
+import Moon from '../../../assets/icons/moon.svg?react';
 import Search from '../../../assets/icons/search.svg?react';
+import Sun from '../../../assets/icons/sun.svg?react';
 
 const icons = {
   'arrow-down': ArrowDown,
@@ -25,7 +27,9 @@ const icons = {
   menu: Menu,
   minus: Minus,
   plus: Plus,
+  moon: Moon,
   search: Search,
+  sun: Sun,
 };
 
 export type IconName = keyof typeof icons;

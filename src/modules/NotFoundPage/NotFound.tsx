@@ -1,7 +1,3 @@
-export const NotFound = () => {
-  return (
-    <div className="not-found">
-      <h1>Error 404: Not Found</h1>
-    </div>
-  );
-};
+import { NotFoundState } from '../shared/NotFoundState';
+
+export const NotFound = () => <NotFoundState title="Page not found" />;

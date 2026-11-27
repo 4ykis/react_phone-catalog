@@ -1,12 +1,14 @@
 import { createContext, useCallback, useContext, useMemo } from 'react';
-import { Product } from '../types/Product';
+import { CartItem, Product } from '../types/Product';
 import { useLocalStorage } from '../utils/useLocalStorage';
 
 interface StoreContextType {
-  cart: Product[];
+  cart: CartItem[];
   favorites: Product[];
   addToCart: (product: Product) => void;
   removeFromCart: (itemId: string) => void;
+  increaseQuantity: (itemId: string) => void;
+  decreaseQuantity: (itemId: string) => void;
   toggleCart: (product: Product) => void;
   addToFavorites: (product: Product) => void;
   removeFromFavorites: (itemId: string) => void;
@@ -18,17 +20,45 @@ interface StoreContextType {
 const StoreContext = createContext<StoreContextType | null>(null);
 
 export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cart, setCart] = useLocalStorage<Product[]>('cart', []);
+  const [storedCart, setCart] = useLocalStorage<CartItem[]>('cart', []);
   const [favorites, setFavorites] = useLocalStorage<Product[]>('favorites', []);
+
+  // Carts saved before quantities existed have no quantity: treat it as 1
+  const cart = useMemo(
+    () => storedCart.map(item => ({ ...item, quantity: item.quantity ?? 1 })),
+    [storedCart],
+  );
 
   const addToCart = useCallback(
     (product: Product) =>
       setCart(current =>
         current.some(item => item.itemId === product.itemId)
           ? current
-          : [...current, product],
+          : [...current, { ...product, quantity: 1 }],
       ),
     [setCart],
+  );
+
+  const changeQuantity = useCallback(
+    (itemId: string, step: number) =>
+      setCart(current =>
+        current.map(item =>
+          item.itemId === itemId
+            ? { ...item, quantity: Math.max(1, (item.quantity ?? 1) + step) }
+            : item,
+        ),
+      ),
+    [setCart],
+  );
+
+  const increaseQuantity = useCallback(
+    (itemId: string) => changeQuantity(itemId, 1),
+    [changeQuantity],
+  );
+
+  const decreaseQuantity = useCallback(
+    (itemId: string) => changeQuantity(itemId, -1),
+    [changeQuantity],
   );
 
   const removeFromCart = useCallback(
@@ -64,6 +94,8 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       favorites,
       addToCart,
       removeFromCart,
+      increaseQuantity,
+      decreaseQuantity,
       toggleCart: product =>
         isInCart(product.itemId)
           ? removeFromCart(product.itemId)
@@ -82,6 +114,8 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     favorites,
     addToCart,
     removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
     addToFavorites,
     removeFromFavorites,
   ]);

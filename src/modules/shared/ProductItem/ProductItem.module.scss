@@ -4,9 +4,9 @@
   justify-content: space-between;
   height: 100%;
   gap: 8px;
-  background: var(--color-p-surface3);
-
   padding: 32px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
 
   &:hover {
     --img-scale: 1.08;
@@ -84,26 +84,4 @@
   display: grid;
   gap: 8px;
   grid-template-columns: 1fr var(--fav-btn-size);
-
-  &__favorite {
-    display: grid;
-    place-items: center;
-    width: var(--fav-btn-size);
-    height: var(--fav-btn-size);
-    color: var(--color-p-white);
-    background-color: var(--fav-btn-bg, var(--color-p-surface2));
-    border: 1px solid var(--fav-border-color, var(--fav-btn-bg));
-    transition: border 0.3s, background-color 0.3s;
-
-    &:hover:not(:disabled) {
-      --fav-btn-bg: var(--color-p-icons);
-    }
-
-    &--selected {
-      --fav-btn-bg: transparent;
-      --fav-border-color: var(--color-p-surface2);
-
-      color: var(--color-p-red);
-    }
-  }
 }

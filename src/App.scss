@@ -1,6 +1,11 @@
-// not empty
+// Flex column instead of grid rows: a sticky header inside a grid is limited
+// to its own row and would never stay on screen
 .app {
   min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
+
+  > .container {
+    flex: 1;
+  }
 }

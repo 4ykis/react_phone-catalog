@@ -2,15 +2,11 @@ import { Link } from 'react-router-dom';
 import { Logo } from './../Logo';
 import classNames from 'classnames';
 import styles from './footer.module.scss';
+import { Button } from '../Button';
 import { Icon } from '../Icon';
 import { scrollToTop } from '../../../utils/scrollToTop';
 
 export const Footer = () => {
-  const backToTop = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    scrollToTop();
-  };
-
   return (
     <div className={styles.footer}>
       <div className={classNames(styles['footer-container'], 'container')}>
@@ -38,12 +34,27 @@ export const Footer = () => {
             Rights
           </Link>
         </div>
-        <a href="" onClick={backToTop} className={styles['footer-top-link']}>
-          <span className={styles['footer-top-link__text']}>Back to top</span>
-          <span className={styles['footer-top-link__icon']}>
+        <div className={styles['footer-top-link']}>
+          <button
+            type="button"
+            tabIndex={-1}
+            aria-hidden="true"
+            className={styles['footer-top-link__text']}
+            onClick={scrollToTop}
+          >
+            Back to top
+          </button>
+
+          <Button
+            palette="tertiary"
+            size="sm"
+            isIcon
+            ariaLabel="Back to top"
+            onClick={scrollToTop}
+          >
             <Icon name="arrow-up" />
-          </span>
-        </a>
+          </Button>
+        </div>
       </div>
     </div>
   );

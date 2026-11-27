@@ -48,18 +48,12 @@
   font-weight: 700;
   color: var(--color-p-secondary);
 
-  &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    color: var(--color-p-white);
-    background-color: var(--footer-icon-bg, var(--color-p-surface2));
-    transition: background-color 0.3s;
-  }
-
-  &:hover {
-    --footer-icon-bg: var(--color-p-icons);
+  &__text {
+    padding: 0;
+    background: none;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
   }
 }

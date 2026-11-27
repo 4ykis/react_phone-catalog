@@ -1,0 +1,121 @@
+// Theme tokens. Dark is the default (:root), light is switched on with
+// <html data-theme="light"> (see utils/useTheme.ts).
+// Button tokens are named --btn-{palette}-{part} and are consumed by
+// shared/Button/Button.module.scss.
+
+@mixin button-tokens($tokens) {
+  @each $palette, $parts in $tokens {
+    @each $part, $value in $parts {
+      --btn-#{$palette}-#{$part}: #{$value};
+    }
+  }
+}
+
+$buttons-dark: (
+  'primary': (
+    'bg': var(--color-p-accent),
+    'border': var(--color-p-accent),
+    'color': var(--color-p-white),
+    'hover-bg': var(--color-p-accent-hover),
+    'hover-border': var(--color-p-accent-hover),
+    'hover-shadow': none,
+    'selected-bg': var(--color-p-surface2),
+    'selected-border': var(--color-p-surface2),
+    'selected-color': var(--color-p-white),
+  ),
+  'secondary': (
+    'bg': var(--color-p-surface3),
+    'border': var(--color-p-surface3),
+    'color': var(--color-p-white),
+    'hover-bg': var(--color-p-elements),
+    'hover-border': var(--color-p-elements),
+    'hover-shadow': none,
+    'selected-bg': var(--color-p-accent),
+    'selected-border': var(--color-p-accent),
+    'selected-color': var(--color-p-white),
+  ),
+  'tertiary': (
+    'bg': var(--color-p-surface2),
+    'border': var(--color-p-surface2),
+    'color': var(--color-p-white),
+    'hover-bg': var(--color-p-icons),
+    'hover-border': var(--color-p-icons),
+    'hover-shadow': none,
+    'selected-bg': var(--color-p-accent),
+    'selected-border': var(--color-p-accent),
+    'selected-color': var(--color-p-white),
+  ),
+);
+$buttons-light: (
+  'primary': (
+    'bg': #313237,
+    'border': #313237,
+    'color': #fff,
+    'hover-bg': #313237,
+    'hover-border': #313237,
+    'hover-shadow': 0 3px 13px rgb(23 32 49 / 40%),
+    'selected-bg': #fff,
+    'selected-border': #e2e6e9,
+    'selected-color': #27ae60,
+  ),
+  'secondary': (
+    'bg': #fff,
+    'border': #e2e6e9,
+    'color': #313237,
+    'hover-bg': #fff,
+    'hover-border': #313237,
+    'hover-shadow': none,
+    'selected-bg': #313237,
+    'selected-border': #313237,
+    'selected-color': #fff,
+  ),
+  'tertiary': (
+    'bg': #fff,
+    'border': #b4bdc3,
+    'color': #313237,
+    'hover-bg': #fff,
+    'hover-border': #313237,
+    'hover-shadow': none,
+    'selected-bg': #fff,
+    'selected-border': #b4bdc3,
+    'selected-color': #eb5757,
+  ),
+);
+
+:root {
+  color-scheme: dark;
+
+  --skeleton-shimmer: rgb(255 255 255 / 12%);
+  --color-p-static-white: #fff;
+  --card-bg: var(--color-p-surface3);
+  --card-border: transparent;
+
+  @include button-tokens($buttons-dark);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  // page background and text
+  --color-p-black: #fff;
+  --color-p-white: #313237;
+  --color-p-secondary: #89939a;
+  --color-p-icons: #b4bdc3;
+  --color-p-elements: #e2e6e9;
+  --color-p-surface2: #e2e6e9;
+  --color-p-surface3: #fafbfc;
+  --color-p-accent: #313237;
+  --color-p-accent-hover: #89939a;
+  --color-p-green: #27ae60;
+  --color-p-red: #eb5757;
+  --skeleton-shimmer: rgb(255 255 255 / 70%);
+  --card-bg: transparent;
+  --card-border: #e2e6e9;
+
+  @include button-tokens($buttons-light);
+
+  // The logo images are white: flip lightness, keep the hues
+  .logo {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}

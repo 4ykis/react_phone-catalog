@@ -13,3 +13,7 @@ export interface Product {
   year: number;
   image: string;
 }
+
+export interface CartItem extends Product {
+  quantity: number;
+}

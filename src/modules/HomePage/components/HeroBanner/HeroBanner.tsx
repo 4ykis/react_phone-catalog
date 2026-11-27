@@ -5,29 +5,24 @@ import styles from './HeroBanner.module.scss';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
+import { Button } from '../../../shared/Button';
 import { Icon } from '../../../shared/Icon';
-import { Link } from 'react-router-dom';
+import { BannerSlide } from '../BannerSlide';
 
 interface Props {
   items: BannerItem[];
 }
 
-const Arrow = ({ direction }: { direction: 'left' | 'right' }) => (
-  <div className="arrow">
-    <Icon name={`arrow-${direction}`} size="16" />
-  </div>
-);
-
 export const HeroBanner = ({ items }: Props) => {
   return (
     <div className={styles.hero}>
-      <button
-        type="button"
+      <Button
+        palette="tertiary"
         className={`${styles.arrow} ${styles.prev}`}
-        aria-label="Previous slide"
+        ariaLabel="Previous slide"
       >
-        <Arrow direction="left" />
-      </button>
+        <Icon name="arrow-left" />
+      </Button>
 
       <Swiper
         className={styles.banner}
@@ -43,29 +38,26 @@ export const HeroBanner = ({ items }: Props) => {
           clickable: true,
         }}
       >
-        {items.map((item, index) => (
-          <SwiperSlide key={index} className={styles.slide}>
-            <Link to={item.link}>
-              <picture>
-                <source srcSet={item.urlDesk} media="(min-width: 640px)" />
-                <img
-                  className={styles.image}
-                  src={item.urlMob}
-                  alt={item.alt}
-                />
-              </picture>
-            </Link>
+        {items.map(({ img, imgMob, title, subtitle, url }) => (
+          <SwiperSlide key={url} className={styles.slide}>
+            <BannerSlide
+              img={img}
+              imgMob={imgMob}
+              title={title}
+              subtitle={subtitle}
+              url={url}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
 
-      <button
-        type="button"
+      <Button
+        palette="tertiary"
         className={`${styles.arrow} ${styles.next}`}
-        aria-label="Next slide"
+        ariaLabel="Next slide"
       >
-        <Arrow direction="right" />
-      </button>
+        <Icon name="arrow-right" />
+      </Button>
 
       <div className={styles.pagination} />
     </div>

@@ -1,72 +1,81 @@
+// Palette tokens (--btn-{palette}-*) come from the active theme,
+// see assets/styles/_themes.scss
+@mixin palette($name) {
+  @each $part in (
+    'bg',
+    'border',
+    'color',
+    'hover-bg',
+    'hover-border',
+    'hover-shadow',
+    'selected-bg',
+    'selected-border',
+    'selected-color'
+  ) {
+    --btn-#{$part}: var(--btn-#{$name}-#{$part});
+  }
+}
+
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: var(--btn-height);
   padding-inline: var(--btn-padding-inline);
-  background-color: var(--btn-bg-color);
-  border: 1px solid var(--btn-border-color, var(--btn-bg-color));
-  font-family: inherit; 
-  color: var(--btn-color-text);
+  background-color: var(--btn-bg);
+  border: 1px solid var(--btn-border);
+  font-family: inherit;
+  color: var(--btn-color);
   font-size: var(--btn-text-size);
   font-weight: 700;
   cursor: pointer;
   transition:
     background-color 0.3s,
     border-color 0.3s,
-    color 0.3s;
+    color 0.3s,
+    box-shadow 0.3s,
+    opacity 0.3s;
 
   &:disabled {
-    --btn-border-color: var(--color-p-icons);
-    --btn-color-text: var(--color-p-icons);
-    --btn-bg-color: transparent;
-  
+    --btn-bg: transparent;
+    --btn-border: var(--color-p-icons);
+    --btn-color: var(--color-p-icons);
+
     cursor: not-allowed;
   }
 
-  &--selected {
-    --btn-border-color: var(--btn-bg-color-selected, var(--btn-bg-color));
-    
-    background-color: var(--btn-bg-color-selected, var(--btn-bg-color));
-    
+  &:hover:not(:disabled) {
+    background-color: var(--btn-hover-bg);
+    border-color: var(--btn-hover-border);
+    box-shadow: var(--btn-hover-shadow);
   }
 }
 
 // Palettes
 .primary {
-  --btn-bg-color: var(--color-p-accent);
-  --btn-color-text: var(--color-p-white);
-  --btn-bg-color-selected: var(--color-p-surface2);
-
-  &:hover:not(:disabled) {
-    --btn-bg-color: var(--color-p-accent-hover);
-  }
+  @include palette('primary');
 }
 
 .secondary {
-  --btn-bg-color: var(--color-p-surface3);
-  --btn-color-text: var(--color-p-white);
-  --btn-bg-color-selected: var(--color-p-accent);
-
-  &:hover:not(:disabled) {
-    --btn-bg-color: var(--color-p-elements);
-  }
+  @include palette('secondary');
 }
 
 .tertiary {
-  --btn-bg-color: var(--color-p-surface2);
-  --btn-color-text: var(--color-p-white);
-  --btn-bg-color-selected: var(--color-p-accent);
+  @include palette('tertiary');
 
-  &:hover:not(:disabled) {
-    --btn-bg-color: var(--color-p-icons);
+  &:disabled {
+    --btn-bg: var(--btn-tertiary-bg);
+    --btn-border: var(--btn-tertiary-border);
+    --btn-color: var(--btn-tertiary-color);
+
+    opacity: 0.5;
   }
 }
 
 // Sizes
 .sm {
   height: 32px;
-  padding-inline: 8px;
+  padding-inline: 4px;
   font-size: 12px;
 }
 
@@ -74,12 +83,12 @@
   @include text(14px, 21px, 600);
 
   height: 40px;
-  padding-inline: 12px;
+  padding-inline: 6px;
 }
 
 .lg {
   height: 48px;
-  padding-inline: 16px;
+  padding-inline: 12px;
   font-size: 16px;
 }
 
@@ -93,4 +102,14 @@
 
   aspect-ratio: 1;
   padding-inline: 0;
+}
+
+// Selected state: must stay below the palettes to override their tokens
+.button--selected {
+  --btn-bg: var(--btn-selected-bg);
+  --btn-border: var(--btn-selected-border);
+  --btn-color: var(--btn-selected-color);
+  --btn-hover-bg: var(--btn-selected-bg);
+  --btn-hover-border: var(--btn-selected-border);
+  --btn-hover-shadow: none;
 }

@@ -1,14 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import {
-  Link,
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { Breadcrumbs } from '../shared/Breadcrumbs';
 import { Icon } from '../shared/Icon';
+import { NotFoundState } from '../shared/NotFoundState';
 import { ProductSlider } from '../shared/ProductSlider';
 import { ProductDetails } from '../../types/ProductDetails';
 import {
@@ -78,7 +73,7 @@ export const Product = () => {
   }
 
   if (!details) {
-    return <Navigate to="/404" replace />;
+    return <NotFoundState title="Product was not found" />;
   }
 
   const { name, category, images } = details;

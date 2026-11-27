@@ -14,22 +14,25 @@ import { Category } from './components/Category/Category';
 
 const mainBannerItems: BannerItem[] = [
   {
-    urlDesk: 'img/main-banner/banner-desktop.png',
-    urlMob: 'img/main-banner/banner-mobile.png',
-    alt: 'Now available in our store! iPhone 14 Pro',
-    link: '/phones',
+    img: 'img/main-banner/banner-1.jpg',
+    imgMob: 'img/main-banner/banner-1-mob.jpg',
+    title: 'Meet the latest phones',
+    subtitle: 'Powerful, fast and ready for everything',
+    url: '/phones',
   },
   {
-    urlDesk: 'img/main-banner/banner-desktop.png',
-    urlMob: 'img/main-banner/banner-mobile.png',
-    alt: 'Now available in our store! iPhone 14 Pro',
-    link: '/phones',
+    img: 'img/main-banner/banner-2.jpg',
+    imgMob: 'img/main-banner/banner-2-mob.jpg',
+    title: 'Tablets for work and play',
+    subtitle: 'Big screens and all-day battery',
+    url: '/tablets',
   },
   {
-    urlDesk: 'img/main-banner/banner-desktop.png',
-    urlMob: 'img/main-banner/banner-mobile.png',
-    alt: 'Now available in our store! iPhone 14 Pro',
-    link: '/phones',
+    img: 'img/main-banner/banner-3.jpg',
+    imgMob: 'img/main-banner/banner-3-mob.jpg',
+    title: 'Complete your setup',
+    subtitle: 'Watches, earbuds and more',
+    url: '/accessories',
   },
 ];
 

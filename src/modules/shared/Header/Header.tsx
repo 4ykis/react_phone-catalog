@@ -6,6 +6,7 @@ import { Logo } from '../Logo';
 import { Icon } from '../Icon';
 import { useIsMobile } from '../../../utils/useIsMobile';
 import { useStore } from '../../../store/Store';
+import { useTheme } from '../../../utils/useTheme';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
@@ -31,6 +32,7 @@ export const Header = () => {
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const { cart, favorites } = useStore();
+  const { theme, toggleTheme } = useTheme();
 
   const counts = {
     '/favorites': favorites.length,
@@ -134,6 +136,23 @@ export const Header = () => {
                 </NavLink>
               );
             })}
+
+            <button
+              type="button"
+              className={classNames(
+                styles['nav-link'],
+                styles['nav-link--icon'],
+                styles['theme-toggle'],
+              )}
+              aria-label={
+                theme === 'dark'
+                  ? 'Switch to light theme'
+                  : 'Switch to dark theme'
+              }
+              onClick={toggleTheme}
+            >
+              <Icon name={theme === 'dark' ? 'sun' : 'moon'} />
+            </button>
           </div>
         </nav>
       </div>

@@ -19,11 +19,6 @@ export const ProductItem = ({ product }: Props) => {
   const inCart = isInCart(product.itemId);
   const favorite = isFavorite(product.itemId);
 
-  const handleToggleFavorite = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    toggleFavorite(product);
-  };
-
   const productLink = `/product/${itemId}`;
 
   return (
@@ -70,17 +65,15 @@ export const ProductItem = ({ product }: Props) => {
           >
             {inCart ? 'Added to cart' : 'Add to cart'}
           </Button>
-          <a
-            onClick={handleToggleFavorite}
-            aria-pressed={favorite}
-            aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
-            href="#"
-            className={classNames(styles['product-controls__favorite'], {
-              [styles['product-controls__favorite--selected']]: favorite,
-            })}
+          <Button
+            palette="tertiary"
+            isIcon
+            isSelected={favorite}
+            ariaLabel={favorite ? 'Remove from favorites' : 'Add to favorites'}
+            onClick={() => toggleFavorite(product)}
           >
             <Icon name={favorite ? 'heart-filled' : 'heart'} />
-          </a>
+          </Button>
         </div>
       </div>
     </article>

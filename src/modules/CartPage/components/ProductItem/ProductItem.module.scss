@@ -1,0 +1,117 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+
+  @include up('sm') {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px;
+  }
+}
+
+// First row on mobile: delete, image, name
+.info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+
+  @include up('sm') {
+    flex: 1;
+  }
+}
+
+.remove {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--color-p-secondary);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    transform 0.2s;
+
+  &:hover {
+    color: var(--color-p-red);
+    transform: scale(1.2);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-p-accent);
+    outline-offset: 2px;
+  }
+}
+
+.image {
+  display: block;
+  flex-shrink: 0;
+
+  &__img {
+    display: block;
+    width: 66px;
+    height: 66px;
+    object-fit: contain;
+
+    @include up('sm') {
+      width: 80px;
+      height: 80px;
+    }
+  }
+}
+
+.name {
+  min-width: 0;
+  color: var(--color-p-white);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-p-accent-hover);
+  }
+}
+
+// Second row on mobile: counter and price
+.purchase {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include up('sm') {
+    flex-shrink: 0;
+    justify-content: flex-end;
+    gap: 24px;
+  }
+
+  @include up('md') {
+    gap: 40px;
+  }
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+
+  &__value {
+    min-width: 40px;
+    text-align: center;
+    color: var(--color-p-white);
+  }
+}
+
+.price {
+  min-width: 64px;
+  margin: 0;
+  text-align: right;
+  color: var(--color-p-white);
+}
